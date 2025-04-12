@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 const server1 = axios.create({
-  baseURL: 'https://server1-remedial.onrender.com',
+  baseURL: 'https://server1-remedial.onrender.com/api',
 });
 
 const server2 = axios.create({
-  baseURL: 'https://server2-remedial.onrender.com',
+  baseURL: 'https://server2-remedial.onrender.com/api',
 });
 
 let useServer2 = false;
