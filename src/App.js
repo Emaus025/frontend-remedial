@@ -6,7 +6,6 @@ import Home from './components/Home';
 import Logs from './components/Logs';
 import ProtectedRoute from './components/ProtectedRoute';
 import './styles.css';
-import PasswordRecovery from './components/PasswordRecovery';
 
 const App = () => (
   <Router>
@@ -19,7 +18,6 @@ const App = () => (
       <Route element={<ProtectedRoute />}>
         <Route path="/home" element={<Home />} />
         <Route path="/logs" element={<Logs />} />
-        <Route path="/password-recovery" element={<PasswordRecovery />} />
       </Route>
     </Routes>
   </Router>
