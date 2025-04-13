@@ -6,6 +6,7 @@ import Home from './components/Home';
 import Logs from './components/Logs';
 import ProtectedRoute from './components/ProtectedRoute';
 import './styles.css';
+import PasswordRecovery from './components/PasswordRecovery';
 
 const App = () => (
   <Router>
@@ -13,6 +14,7 @@ const App = () => (
       {/* Rutas públicas */}
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/password-recovery" element={<PasswordRecovery />} />
 
       {/* Rutas protegidas */}
       <Route element={<ProtectedRoute />}>
