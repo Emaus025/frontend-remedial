@@ -56,9 +56,10 @@ const Logs = () => {
     setTestProgress([]);
     const totalRequests = 20;
     let requestCounts = { server1: 0, server2: 0 };
-    let responseTimes = { server1: [], server2: [] };
-    let switchedToServer2 = false;
-
+    // Remove unused variables
+    // let responseTimes = { server1: [], server2: [] };
+    // let switchedToServer2 = false;
+  
     try {
       for (let i = 1; i <= totalRequests; i++) {
         const timestamp = new Date().toLocaleTimeString();
@@ -66,32 +67,26 @@ const Logs = () => {
         try {
           const response = await axios.get('/getInfo');
           const endTime = Date.now();
-          const currentServer = response.config.baseURL.includes('3001') ? '1' : '2';
-          
-          // Reset timing if this is the first request after switching to server 2
-          if (currentServer === '2' && !switchedToServer2) {
-            startTime = Date.now() - 100; // Small offset to avoid zero
-            switchedToServer2 = true;
-          }
-          
+          const currentServer = response.config.baseURL.includes('server2') ? '2' : '1';
           const responseTime = endTime - startTime;
-          responseTimes[`server${currentServer}`].push(responseTime);
           
-          // Update logs state with new response time
-          setLogs(prev => ({
-            ...prev,
-            [`server${currentServer}`]: {
-              ...prev[`server${currentServer}`],
-              responseTime: [...(prev[`server${currentServer}`].responseTime || []), responseTime]
-            }
-          }));
-
           requestCounts[`server${currentServer}`]++;
+  
           setTestProgress(prev => [...prev, {
             timestamp,
             message: `Request ${i}/${totalRequests} - Server ${currentServer} - Status: ${response.status} - Response time: ${responseTime}ms`,
             type: 'success'
           }]);
+  
+          // Update logs
+          setLogs(prev => ({
+            ...prev,
+            [`server${currentServer}`]: {
+              ...prev[`server${currentServer}`],
+              responseTime: [...(prev[`server${currentServer}`].responseTime || []), responseTime],
+              info: (prev[`server${currentServer}`].info || 0) + 1
+            }
+          }));
         } catch (error) {
           console.error(`Error on request ${i}/${totalRequests}:`, error);
           const isRateLimit = error.response?.status === 429;
